@@ -39,13 +39,11 @@ def vizinhoaleatorio(list_rainhas):
             list_rainhas[rainha2] = aux1
             list_rainhas[rainha1] = aux2         
             novos_conflitos = fitness(list_rainhas)
-            rep = 0
             return list_rainhas
                 
     
     for i in range(len(list_rainhas)):
         if i not in list_rainhas:
-            #print(i, list_rainhas)
             list_rainhas[pos] = i
             return list_rainhas    
 
@@ -64,7 +62,7 @@ if __name__ == "__main__":
     conflitos = fitness(list_rainhas)
 
     # Iniciar o Loop
-    n_iter = 1000
+    n_iter = 100
 
     for i in range(n_iter):
         if conflitos !=0:
