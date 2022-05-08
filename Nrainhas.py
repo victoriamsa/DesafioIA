@@ -19,30 +19,35 @@ def vizinhoaleatorio(list_rainhas):
     pos = -1
     conflitos = fitness(list_rainhas)
     novos_conflitos = conflitos + 1
+
+    rep = 0
     
     n = len(list_rainhas)
     for i in range(len(list_rainhas)):
         qtd = list_rainhas.count(list_rainhas[i])
         if qtd > 1 and pos != i:
+            rep +=1 
             pos = i
             break
-        else:
-             while novos_conflitos > conflitos:
-                rainha1 = np.random.randint(n)
-                rainha2 = np.random.randint(n)
-                aux1 = list_rainhas[rainha1]
-                aux2 = list_rainhas[rainha2]
-                list_rainhas[rainha2] = aux1
-                list_rainhas[rainha1] = aux2         
-                novos_conflitos = fitness(list_rainhas)
-                return list_rainhas
+    
+    if rep == 0:
+        while novos_conflitos > conflitos:
+            rainha1 = np.random.randint(n)
+            rainha2 = np.random.randint(n)
+            aux1 = list_rainhas[rainha1]
+            aux2 = list_rainhas[rainha2]
+            list_rainhas[rainha2] = aux1
+            list_rainhas[rainha1] = aux2         
+            novos_conflitos = fitness(list_rainhas)
+            rep = 0
+            return list_rainhas
+                
     
     for i in range(len(list_rainhas)):
         if i not in list_rainhas:
+            #print(i, list_rainhas)
             list_rainhas[pos] = i
             return list_rainhas    
-
-   
 
 
     return list_rainhas
@@ -59,12 +64,11 @@ if __name__ == "__main__":
     conflitos = fitness(list_rainhas)
 
     # Iniciar o Loop
-    n_iter = 10000
+    n_iter = 1000
 
     for i in range(n_iter):
         if conflitos !=0:
             vizinho = vizinhoaleatorio(list_rainhas)
-            # print(vizinho)
             conflitos_atual = fitness(vizinho)
             
             if conflitos_atual > conflitos:
